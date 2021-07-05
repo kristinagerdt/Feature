@@ -8,6 +8,7 @@ import test.kgerdt.feature.tool.Converter;
 import test.kgerdt.feature.tool.Parser;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,9 +29,20 @@ public class FeatureServiceImpl implements FeatureService {
                 .collect(Collectors.toList());
     }
 
+    private Optional<Feature> getEntityFeature(String id) {
+        return features
+                .stream()
+                .filter(feature -> id.equals(feature.getProperties().get(0).getId()))
+                .findAny();
+    }
+
     @Override
     public FeatureWebDto getFeatureById(String id) {
-        return null;
+        Optional<Feature> optionalFeature = getEntityFeature(id);
+        if (optionalFeature.isPresent()) {
+            return Converter.convertToFeatureWebDto(optionalFeature.get());
+        }
+        throw new RuntimeException("Feature not found, id=" + id);
     }
 
     @Override
