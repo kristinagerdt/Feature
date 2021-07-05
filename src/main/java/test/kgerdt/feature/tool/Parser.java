@@ -4,64 +4,86 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import test.kgerdt.feature.model.entity.Acquisition;
+import test.kgerdt.feature.model.entity.Feature;
+import test.kgerdt.feature.model.entity.Property;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 public class Parser {
 
-    public void loadAllFeatures() {
+    public List<Feature> loadAllFeatures() {
         String sourceJson = "src/main/resources/static/source-data.json";
 
         JSONParser jsonParser = new JSONParser();
 
         try (FileReader reader = new FileReader(sourceJson)) {
+            List<Feature> features = new ArrayList<>();
+
             Object object = jsonParser.parse(reader);
             JSONArray featureObjects = (JSONArray) object;
 
             for (Object featureObject : featureObjects) {
-                parseFeatureObject((JSONObject) featureObject);
+                features.add(getFeatureObject((JSONObject) featureObject));
             }
+            return features;
         } catch (ParseException | IOException e) {
-            e.printStackTrace();
+            return new ArrayList<>();
         }
     }
 
-    private void parseFeatureObject(JSONObject jsonObject) {
+    private Feature getFeatureObject(JSONObject jsonObject) {
+        Feature feature = new Feature();
+        List<Property> properties = new ArrayList<>();
+
         JSONArray propertyObjects = (JSONArray) jsonObject.get("features");
 
         for (Object propertyObject : propertyObjects) {
-            parsePropertyObject((JSONObject) propertyObject);
+            properties.add(getPropertyObject((JSONObject) propertyObject));
         }
+
+        feature.setProperties(properties);
+        return feature;
     }
 
-    private void parsePropertyObject(JSONObject jsonObject) {
+    private Property getPropertyObject(JSONObject jsonObject) {
+        Property property = new Property();
 
         JSONObject propertyObject = (JSONObject) jsonObject.get("properties");
 
         String id = (String) propertyObject.get("id");
-        System.out.println(id);
+        property.setId(id);
 
         long timestamp = (long) propertyObject.get("timestamp");
-        System.out.println(timestamp);
+        property.setTimestamp(timestamp);
 
         JSONObject acquisitionObject = (JSONObject) propertyObject.get("acquisition");
-        parseAcquisitionObject(acquisitionObject);
+        Acquisition acquisition = getAcquisitionObject(acquisitionObject);
+        property.setAcquisition(acquisition);
 
         String quicklookString = (String) propertyObject.get("quicklook");
         byte[] quicklook = Base64.getDecoder().decode(quicklookString);
-        System.out.println(quicklook.length);
+        property.setQuicklook(quicklook);
+
+        return property;
     }
 
-    private void parseAcquisitionObject(JSONObject jsonObject) {
+    private Acquisition getAcquisitionObject(JSONObject jsonObject) {
+        Acquisition acquisition = new Acquisition();
+
         long beginViewingDate = (long) jsonObject.get("beginViewingDate");
-        System.out.println(beginViewingDate);
+        acquisition.setBeginViewingDate(beginViewingDate);
 
         long endViewingDate = (long) jsonObject.get("endViewingDate");
-        System.out.println(endViewingDate);
+        acquisition.setEndViewingDate(endViewingDate);
 
         String missionName = (String) jsonObject.get("missionName");
-        System.out.println(missionName);
+        acquisition.setMissionName(missionName);
+
+        return acquisition;
     }
 }
