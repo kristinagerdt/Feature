@@ -1,5 +1,6 @@
 package test.kgerdt.feature.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import test.kgerdt.feature.model.entity.Feature;
 import test.kgerdt.feature.model.web.FeatureWebDto;
@@ -7,6 +8,7 @@ import test.kgerdt.feature.service.FeatureService;
 import test.kgerdt.feature.tool.Converter;
 import test.kgerdt.feature.tool.Parser;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,8 +19,14 @@ public class FeatureServiceImpl implements FeatureService {
     private final Parser parser;
     private List<Feature> features;
 
+    @Autowired
     public FeatureServiceImpl(Parser parser) {
         this.parser = parser;
+    }
+
+    @PostConstruct
+    public void init() {
+        features = parser.loadAllFeatures();
     }
 
     @Override
