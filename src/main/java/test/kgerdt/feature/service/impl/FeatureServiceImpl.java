@@ -47,6 +47,11 @@ public class FeatureServiceImpl implements FeatureService {
 
     @Override
     public byte[] getImageByFeatureId(String id) {
-        return new byte[0];
+        Optional<Feature> optionalFeature = getEntityFeature(id);
+
+        if (optionalFeature.isPresent()) {
+            return optionalFeature.get().getProperties().get(0).getQuicklook();
+        }
+        throw new RuntimeException("Feature not found, id=" + id);
     }
 }
