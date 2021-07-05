@@ -4,6 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.stereotype.Component;
 import test.kgerdt.feature.model.entity.Acquisition;
 import test.kgerdt.feature.model.entity.Feature;
 import test.kgerdt.feature.model.entity.Property;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
+@Component
 public class Parser {
 
     public List<Feature> loadAllFeatures() {
