@@ -2,6 +2,7 @@ package test.kgerdt.feature.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import test.kgerdt.feature.exception.FeatureNotFoundException;
 import test.kgerdt.feature.model.entity.Feature;
 import test.kgerdt.feature.model.web.FeatureWebDto;
 import test.kgerdt.feature.service.FeatureService;
@@ -50,7 +51,7 @@ public class FeatureServiceImpl implements FeatureService {
         if (optionalFeature.isPresent()) {
             return Converter.convertToFeatureWebDto(optionalFeature.get());
         }
-        throw new RuntimeException("Feature not found, id=" + id);
+        throw new FeatureNotFoundException("Feature not found, id=" + id);
     }
 
     @Override
@@ -60,6 +61,6 @@ public class FeatureServiceImpl implements FeatureService {
         if (optionalFeature.isPresent()) {
             return optionalFeature.get().getProperties().get(0).getQuicklook();
         }
-        throw new RuntimeException("Feature not found, id=" + id);
+        throw new FeatureNotFoundException("Feature not found, id=" + id);
     }
 }
