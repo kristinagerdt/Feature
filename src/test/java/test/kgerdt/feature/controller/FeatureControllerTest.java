@@ -13,20 +13,16 @@ import test.kgerdt.feature.exception.FeatureNotFoundException;
 import test.kgerdt.feature.model.web.FeatureWebDto;
 import test.kgerdt.feature.service.FeatureService;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static test.kgerdt.feature.controller.Helper.getQuicklookString;
 
 @ExtendWith(MockitoExtension.class)
 class FeatureControllerTest {
@@ -111,18 +107,6 @@ class FeatureControllerTest {
 
         assertThrows(FeatureNotFoundException.class, () -> featureService.getFeatureById(anyString()));
         then(featureService).should().getFeatureById(anyString());
-    }
-
-    private static String getQuicklookString(String filePath) {
-        StringBuilder contentBuilder = new StringBuilder();
-
-        try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
-            stream.forEach(contentBuilder::append);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return contentBuilder.toString();
     }
 
     @Test
