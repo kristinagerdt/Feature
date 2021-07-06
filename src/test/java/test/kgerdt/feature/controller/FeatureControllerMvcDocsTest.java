@@ -34,7 +34,7 @@ import static test.kgerdt.feature.controller.Helper.getQuicklookString;
 
 @WebMvcTest(FeatureController.class)
 @ExtendWith(RestDocumentationExtension.class)
-@AutoConfigureRestDocs
+@AutoConfigureRestDocs(outputDir = "target/snippets")
 class FeatureControllerMvcDocsTest {
 
     @MockBean
