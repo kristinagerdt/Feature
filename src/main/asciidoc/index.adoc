@@ -1,0 +1,80 @@
+= Feature - FeatureController RestDocs
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+
+`FeatureControllerMvcDocsTest` makes a call to a very simple service and produces three documentation snippets.
+
+GET ALL FEATURES
+
+One showing how to make a request using cURL:
+include::{snippets}/features-get/curl-request.adoc[]
+
+One showing the HTTP request:
+include::{snippets}/features-get/http-request.adoc[]
+
+And one showing the HTTP response:
+include::{snippets}/features-get/http-response.adoc[]
+
+Request Body: Empty
+
+Response Body:
+include::{snippets}/features-get/response-body.adoc[]
+
+Response Fields:
+include::{snippets}/features-get/response-fields.adoc[]
+
+
+GET FEATURE BY ID
+
+One showing how to make a request using cURL:
+include::{snippets}/feature-by-id/curl-request.adoc[]
+
+One showing the HTTP request:
+include::{snippets}/feature-by-id/http-request.adoc[]
+
+And one showing the HTTP response:
+include::{snippets}/feature-by-id/http-response.adoc[]
+
+Request Body: Empty
+
+Response Body:
+include::{snippets}/feature-by-id/response-body.adoc[]
+
+Response Fields:
+include::{snippets}/feature-by-id/response-fields.adoc[]
+
+Path Parameters:
+include::{snippets}/feature-by-id/path-parameters.adoc[]
+
+
+GET IMAGE BY FEATURE ID
+
+One showing how to make a request using cURL:
+include::{snippets}/image-by-feature-id/curl-request.adoc[]
+
+One showing the HTTP request:
+include::{snippets}/image-by-feature-id/http-request.adoc[]
+
+And one showing the HTTP response:
+----
+HTTP/1.1 200 OK
+Content-Type: image/png
+Content-Length: 236829
+<PNG IMAGE>
+----
+
+Request Body: Empty
+
+Response Body:
+----
+HTTP/1.1 200 OK
+Content-Type: image/png
+Content-Length: 236829
+<PNG IMAGE>
+----
+
+Response Fields: Empty
+
+Path Parameters:
+include::{snippets}/image-by-feature-id/path-parameters.adoc[]
