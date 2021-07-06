@@ -14,14 +14,9 @@ import test.kgerdt.feature.exception.FeatureNotFoundException;
 import test.kgerdt.feature.model.web.FeatureWebDto;
 import test.kgerdt.feature.service.FeatureService;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
@@ -31,6 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static test.kgerdt.feature.controller.Helper.getQuicklookString;
 
 @WebMvcTest(FeatureController.class)
 class FeatureControllerMvcTest {
@@ -128,18 +124,6 @@ class FeatureControllerMvcTest {
         mockMvc.perform(get(URL + "{id}", id)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
-    }
-
-    private static String getQuicklookString(String filePath) {
-        StringBuilder contentBuilder = new StringBuilder();
-
-        try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
-            stream.forEach(contentBuilder::append);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return contentBuilder.toString();
     }
 
     @Test
